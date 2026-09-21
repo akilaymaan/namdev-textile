@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from '../components/icons';
+import TextileBackdrop from '../components/TextileBackdrop';
 
 const fadeIn = (delay = 0) => ({
   initial: { filter: 'blur(10px)', opacity: 0, y: 20 },
@@ -33,6 +34,7 @@ const PILLARS = [
 export default function About() {
   return (
     <section id="about" className="relative bg-black overflow-hidden scroll-mt-24">
+      <TextileBackdrop variant="rows" dim />
       <div className="relative z-10 px-8 md:px-16 lg:px-20 pt-24 pb-20">
         <motion.p {...fadeIn(0)} className="text-sm font-body text-white/80 mb-6">
           {'// The Studio'}

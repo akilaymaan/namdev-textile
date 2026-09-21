@@ -86,13 +86,35 @@ function Row({
   );
 }
 
-export default function TextileBackdrop({ variant = 'columns' }: { variant?: 'columns' | 'rows' }) {
+export default function TextileBackdrop({
+  variant = 'columns',
+  dim = false,
+  fixed = false,
+  image,
+}: {
+  variant?: 'columns' | 'rows' | 'focus';
+  /** heavier overlay — use behind dense content */
+  dim?: boolean;
+  /** pin behind the whole page (uses global scroll progress) */
+  fixed?: boolean;
+  /** single image for the 'focus' variant (blurred, slow zoom) */
+  image?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const local = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const global = useScroll();
+  const scrollYProgress = fixed ? global.scrollYProgress : local.scrollYProgress;
 
   return (
-    <div ref={ref} className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
-      {variant === 'columns' ? (
+    <div
+      ref={ref}
+      className={`${fixed ? 'fixed' : 'absolute'} inset-0 z-0 overflow-hidden`}
+      aria-hidden="true"
+    >
+      {variant === 'focus' ? (
+        /* single product image — blurred, slowly zooming, scroll parallax */
+        <FocusImage src={image ?? ''} progress={scrollYProgress} />
+      ) : variant === 'columns' ? (
         <div className="absolute -inset-[22%] rotate-[-5deg] flex gap-4 md:gap-6">
           <Column imgs={pick(0, 4, 9)} progress={scrollYProgress} dir="up" duration={48} range={[40, -140]} />
           <Column imgs={pick(1, 4, 9)} progress={scrollYProgress} dir="down" duration={62} range={[-60, 120]} />
@@ -119,11 +141,29 @@ export default function TextileBackdrop({ variant = 'columns' }: { variant?: 'co
       <div className="blockprint absolute inset-0 opacity-[0.06]" />
 
       {/* readability overlays */}
+      {dim && <div className="absolute inset-0 bg-black/60" />}
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/45 to-black" />
       <div
         className="absolute inset-0"
         style={{ background: 'radial-gradient(ellipse 85% 60% at 50% 45%, transparent 25%, rgba(0,0,0,0.55) 100%)' }}
       />
     </div>
+  );
+}
+
+function FocusImage({ src, progress }: { src: string; progress: MotionValue<number> }) {
+  const y = useSpring(useTransform(progress, [0, 1], [60, -60]), SPRING);
+  return (
+    <motion.div style={{ y }} className="absolute -inset-[12%]">
+      <div className="kenburns w-full h-full">
+        {src && (
+          <img
+            src={src}
+            alt=""
+            className="w-full h-full object-cover blur-2xl brightness-[0.55] saturate-[0.9] scale-110"
+          />
+        )}
+      </div>
+    </motion.div>
   );
 }

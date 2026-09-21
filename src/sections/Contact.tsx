@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight } from '../components/icons';
+import TextileBackdrop from '../components/TextileBackdrop';
 
 const fadeIn = (delay = 0) => ({
   initial: { filter: 'blur(10px)', opacity: 0, y: 20 },
@@ -25,6 +26,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative bg-black overflow-hidden scroll-mt-24">
+      <TextileBackdrop variant="rows" dim />
       <div className="relative z-10 px-8 md:px-16 lg:px-20 pt-24 pb-16">
         <motion.p {...fadeIn(0)} className="text-sm font-body text-white/80 mb-6">
           {'// Contact'}

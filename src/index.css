@@ -48,6 +48,17 @@ body {
     background-position: 140px 140px;
   }
 }
+@keyframes kenburns {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.14);
+  }
+}
+.kenburns {
+  animation: kenburns 26s ease-in-out infinite alternate;
+}
 
 .textile-up {
   animation: textile-up linear infinite;
@@ -77,7 +88,8 @@ body {
   .textile-down,
   .textile-left,
   .textile-right,
-  .blockprint {
+  .blockprint,
+  .kenburns {
     animation: none !important;
   }
 }

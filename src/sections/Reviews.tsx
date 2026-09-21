@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import TextileBackdrop from '../components/TextileBackdrop';
 
 const fadeIn = (delay = 0) => ({
   initial: { filter: 'blur(10px)', opacity: 0, y: 20 },
@@ -59,6 +60,7 @@ const Stars = ({ n }: { n: number }) => (
 export default function Reviews() {
   return (
     <section id="reviews" className="relative bg-black overflow-hidden scroll-mt-24">
+      <TextileBackdrop variant="columns" dim />
       <div className="relative z-10 px-8 md:px-16 lg:px-20 pt-24 pb-20">
         <motion.p {...fadeIn(0)} className="text-sm font-body text-white/80 mb-6">
           {'// Reviews'}

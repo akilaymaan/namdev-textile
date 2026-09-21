@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
+import TextileBackdrop from '../components/TextileBackdrop';
 import Footer from '../components/Footer';
 import ProductCard from '../components/ProductCard';
 import { CATEGORIES, CATEGORY_LABEL, PRODUCTS } from '../data/products';
@@ -19,7 +20,9 @@ export default function Shop() {
     <div className="bg-black min-h-screen">
       <Navbar />
 
-      <div className="px-8 md:px-16 lg:px-20 pt-36 pb-10">
+      <div className="relative overflow-hidden">
+        <TextileBackdrop variant="columns" dim />
+        <div className="relative z-10 px-8 md:px-16 lg:px-20 pt-36 pb-10">
         <motion.p {...fadeIn(0)} className="text-sm font-body text-white/80 mb-6">
           {'// The Range'}
         </motion.p>
@@ -47,6 +50,7 @@ export default function Shop() {
             </a>
           ))}
         </motion.div>
+        </div>
       </div>
 
       {/* category sections */}

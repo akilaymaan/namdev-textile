@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import TextileBackdrop from '../components/TextileBackdrop';
 import ProductCard from '../components/ProductCard';
 import { ArrowUpRight } from '../components/icons';
 import { CATEGORY_LABEL, getProduct, productImg, relatedProducts } from '../data/products';
@@ -44,7 +45,9 @@ export default function ProductPage({ slug }: { slug: string }) {
     <div className="bg-black min-h-screen">
       <Navbar />
 
-      <div className="px-8 md:px-16 lg:px-20 pt-32 pb-10">
+      <div className="relative overflow-hidden">
+        <TextileBackdrop variant="focus" image={productImg(product)} />
+        <div className="relative z-10 px-8 md:px-16 lg:px-20 pt-32 pb-10">
         {/* breadcrumb */}
         <motion.nav {...fadeIn(0)} className="text-xs font-body text-white/60 flex flex-wrap gap-2 mb-10">
           <a href="/" className="hover:text-white transition-colors">Home</a>
@@ -171,6 +174,7 @@ export default function ProductPage({ slug }: { slug: string }) {
             </div>
           </div>
         )}
+        </div>
       </div>
 
       <Footer />
